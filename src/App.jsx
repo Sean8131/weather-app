@@ -1,34 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const api = {
+  key: "f77b2eac642bbef8be0323404d70386f",
+  base: "https://api.openweathermap.org/data/3.0/",
+};
 
+function App() {
+  const [search, setSearch] = useState("");
+
+  const searchPressed = () => {
+    fetch('${api.base}weather?q=${search}&units=metric&APPID=${api.key}')
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    });
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+    <div className="App">
+      <header className='App-header'>
+        {/* HEADER */}
       <h1>Weather App</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+      {/* Search Box */}
+      <div>
+        <input 
+          type="text" 
+          placeholder='Enter city/town'
+          onChange={(e) => setSearch(e.target.value)} 
+        />
+        <button onClick={searchPressed}>Search</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      {/* Location */}
+      <p>New York City, USA</p>
+      {/* Temperature F/C */}
+      <p>32 °C</p>
+      {/* Condition (Sunny) */}
+      <p>Sunny</p>
+      </header>
+    </div>    
   )
 }
 
