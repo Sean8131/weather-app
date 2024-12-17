@@ -11,11 +11,7 @@ import humidity_icon from'../assets/humidity.png'
 
 const Weather = () => {
 
-<<<<<<< Updated upstream
-    // const[isDataLoading, setIsDataLoading] = useState(false);
-=======
     const [isLoading, setIsLoading] = useState(true);
->>>>>>> Stashed changes
 
     const inputRef = useRef();
 
@@ -65,14 +61,9 @@ const Weather = () => {
                 location: data.name,
                 icon: icon
             })
-<<<<<<< Updated upstream
         } catch {
             setWeatherData(false);
             console.error("Error in fetching weather data");
-=======
-        } catch (error) {
-            console.error("Error")
->>>>>>> Stashed changes
         }
     }
 
@@ -84,20 +75,14 @@ const Weather = () => {
     <div className='weather'>
       <div className='search-bar'>
         <input ref={inputRef} type="text" placeholder='Search' />
-<<<<<<< Updated upstream
         <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)} onKeyDown={(e) => {
             if (e.key === "Enter")
                 search(inputRef.current.value);
         }}
         />
       </div>
-      {weatherData?<>
-=======
-        <img src={search_icon} 
-            onClick={() => search(inputRef.current.value)}/>
-      </div>
       <p className='spinner'>{isLoading ? "😃" : ""}</p>
->>>>>>> Stashed changes
+      {weatherData?<>
         <img src={weatherData.icon} alt="" className='weather-icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
         <p className='location'>{weatherData.location}</p>
