@@ -11,6 +11,8 @@ import humidity_icon from'../assets/humidity.png'
 
 const Weather = () => {
 
+    // const[isDataLoading, setIsDataLoading] = useState(false);
+
     const inputRef = useRef();
 
     const [weatherData, setWeatherData] = useState(false);
@@ -46,6 +48,10 @@ const Weather = () => {
 
             const response = await fetch(url);
             const data = await response.json();
+            if(!response.ok) {
+                alert(data.message);
+                return;
+            }
             console.log(data);
             const icon = allIcons[data.weather[0].icon] || clear_icon;
             setWeatherData({
@@ -55,8 +61,9 @@ const Weather = () => {
                 location: data.name,
                 icon: icon
             })
-        } catch (error) {
-
+        } catch {
+            setWeatherData(false);
+            console.error("Error in fetching weather data");
         }
     }
 
@@ -68,8 +75,13 @@ const Weather = () => {
     <div className='weather'>
       <div className='search-bar'>
         <input ref={inputRef} type="text" placeholder='Search' />
-        <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)} />
+        <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)} onKeyDown={(e) => {
+            if (e.key === "Enter")
+                search(inputRef.current.value);
+        }}
+        />
       </div>
+      {weatherData?<>
         <img src={weatherData.icon} alt="" className='weather-icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
         <p className='location'>{weatherData.location}</p>
@@ -89,6 +101,8 @@ const Weather = () => {
                 </div>
             </div>
         </div>
+      
+      </>:<></>}
     </div>
   )
 }
