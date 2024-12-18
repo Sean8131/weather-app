@@ -41,6 +41,7 @@ const Weather = () => {
     const search = async (city) => {
         if(city === "") {
             alert("Enter City Name");
+            setIsLoading(true);
             return;
         }
         try {
@@ -61,11 +62,21 @@ const Weather = () => {
                 location: data.name,
                 icon: icon
             })
+            console.log('test');
         } catch {
             setWeatherData(false);
             console.error("Error in fetching weather data");
         }
     }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('foo');
+        }, 3000)
+        return() => {
+            clearInterval(interval);
+        }
+    })
 
     useEffect (() => {
         search("London");
@@ -81,7 +92,7 @@ const Weather = () => {
         }}
         />
       </div>
-      <p className='spinner'>{isLoading ? "😃" : ""}</p>
+      {/* <p className='spinner'>{isLoading ? "😃" : ""}</p> */}
       {weatherData?<>
         <img src={weatherData.icon} alt="" className='weather-icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
